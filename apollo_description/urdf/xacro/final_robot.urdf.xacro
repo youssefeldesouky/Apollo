@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="apollo">
+  <xacro:include filename="$(find apollo_description)/urdf/xacro/wheel.urdf.xacro"/>
+  <xacro:include filename="$(find apollo_description)/urdf/xacro/accessories.urdf.xacro"/>
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.02 0.0 0.06" rpy="0 0 0"/>
+      <mass value="8.40"/>
+      <inertia ixx="0.10" ixy="0" ixz="0.01" iyy="0.21" iyz="0" izz="0.25"/>
+    </inertial>
+      <visual>
+          <geometry>
+            <mesh filename="package://apollo_description/meshfiles/base_link.STL"/>
+          </geometry>
+          <origin xyz="0 0 0"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.49492 0.300 0.09625"/>
+        </geometry>
+      </collision>
+  </link>
+  <xacro:wheel wheel="fl" x_dir="0.14034" y_dir="0.1185"/>
+  <xacro:wheel wheel="fr" x_dir="0.14034" y_dir="-0.1185"/>
+  <xacro:wheel wheel="rl" x_dir="-0.14034" y_dir="0.1185"/>
+  <xacro:wheel wheel="rr" x_dir="-0.14034" y_dir="-0.1185"/>
+  <xacro:kinect/>
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="-0.05 0.0 0.03118" rpy="0.0 0.0 0.0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+  <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+  <gazebo>
+    <plugin name="ridgeback_ros_force_based_move" filename="libridgeback_ros_force_based_move.so">
+      <robotNamespace>/</robotNamespace>
+      <commandTopic>apollo_velocity_controller/cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>25.0</odometryRate>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <cmdVelTimeOut>0.25</cmdVelTimeOut>
+      <!-- Don't publish a transform: the controller does it. -->
+      <publishOdometryTf>0</publishOdometryTf>
+      <yaw_velocity_p_gain>50.0</yaw_velocity_p_gain>
+      <x_velocity_p_gain>10000.0</x_velocity_p_gain>
+      <y_velocity_p_gain>10000.0</y_velocity_p_gain>
+    </plugin>
+    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>100.0</updateRate>
+      <bodyName>imu_link</bodyName>
+      <topicName>imu/data_raw</topicName>
+      <accelDrift>0.0000005 0.0000005 0.0000005</accelDrift>
+      <accelGaussianNoise>0.000000001 0.000000001 0.000000001</accelGaussianNoise>
+      <rateDrift>0.0000005 0.0000005 0.0000005 </rateDrift>
+      <rateGaussianNoise>0.0000001 0.0000001 0.0000001 </rateGaussianNoise>
+      <headingDrift>0.00001</headingDrift>
+      <headingGaussianNoise>0.0000000001</headingGaussianNoise>
+    </plugin>
+    <plugin name="mag_controller" filename="libhector_gazebo_ros_magnetic.so">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>100.0</updateRate>
+      <bodyName>imu_link</bodyName>
+      <topicName>imu/mag_raw</topicName>
+      <declination>4.566667</declination>
+      <inclination>44.733333</inclination>
+      <referenceHeading>0.0</referenceHeading>
+      <magnitude>4.37559e-5</magnitude>
+      <gaussianNoise>0.0000000001 0.0000000001 0.0000000001</gaussianNoise>
+      <offset>1e-5 3e-6 0.0</offset>
+      <drift>0.0 0.0 0.0</drift>
+      <driftFrequency>0.0 0.0 0.0</driftFrequency>
+    </plugin>
+  </gazebo>
+</robot>

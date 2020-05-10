@@ -1,0 +1,11 @@
+<launch>
+  <include file="$(find apollo_description)/launch/robot_description.launch"/>
+  <node name = "rsp" pkg = "robot_state_publisher" type ="robot_state_publisher"/>
+  <rosparam command="load" file="$(find apollo_control)/config/control.yaml"/>
+  <node name = "controller_manger" pkg = "controller_manager" type = "spawner" args = "apollo_joint_publisher apollo_velocity_controller"/>
+  <node pkg="robot_localization" type="ukf_localization_node" name="ekf_localization" />
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="madgwick"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="imu_trans" args="0.0 0.0 0.0 0.0 0.0 0.0 imu_link base_link"/>
+  <node pkg="mag_cal" type="imu_time.py" name="imu_time"/>
+  <node pkg="mag_cal" type="calibrated_mag.py" name="calibrated_magnetometer"/>
+</launch>
