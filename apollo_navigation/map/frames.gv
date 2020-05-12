@@ -1,0 +1,14 @@
+digraph G {
+"base_link" -> "rr_wheel"[label=" Broadcaster: /rsp\nAverage rate: 50.202\nBuffer length: 4.94\nMost recent transform: 19.25\nOldest transform: 14.31\n"];
+"base_link" -> "imu_link"[label=" Broadcaster: /rsp\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "kinect_link"[label=" Broadcaster: /rsp\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "fr_wheel"[label=" Broadcaster: /rsp\nAverage rate: 50.202\nBuffer length: 4.94\nMost recent transform: 19.25\nOldest transform: 14.31\n"];
+"map" -> "odom"[label=" Broadcaster: /map_trans\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"kinect_link" -> "kinect_frame_optical"[label=" Broadcaster: /rsp\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "fl_wheel"[label=" Broadcaster: /rsp\nAverage rate: 50.202\nBuffer length: 4.94\nMost recent transform: 19.25\nOldest transform: 14.31\n"];
+"base_link" -> "rl_wheel"[label=" Broadcaster: /rsp\nAverage rate: 50.202\nBuffer length: 4.94\nMost recent transform: 19.25\nOldest transform: 14.31\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 19.303"[ shape=plaintext ] ;
+}->"base_link";
+}
