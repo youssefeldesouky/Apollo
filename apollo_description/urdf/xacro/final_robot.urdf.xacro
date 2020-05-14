@@ -28,7 +28,7 @@
   <xacro:kinect/>
   <link name="imu_link"/>
   <joint name="imu_joint" type="fixed">
-    <origin xyz="-0.05 0.0 0.03118" rpy="0.0 0.0 0.0"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
     <parent link="base_link"/>
     <child link="imu_link"/>
   </joint>
@@ -55,8 +55,8 @@
       <updateRate>100.0</updateRate>
       <bodyName>imu_link</bodyName>
       <topicName>imu/data_raw</topicName>
-      <accelDrift>0.0000005 0.0000005 0.0000005</accelDrift>
-      <accelGaussianNoise>0.000000001 0.000000001 0.000000001</accelGaussianNoise>
+      <accelDrift>0.0 0.0 0.0</accelDrift>
+      <accelGaussianNoise>0.00001 0.00001 0.00001</accelGaussianNoise>
       <rateDrift>0.0000005 0.0000005 0.0000005 </rateDrift>
       <rateGaussianNoise>0.0000001 0.0000001 0.0000001 </rateGaussianNoise>
       <headingDrift>0.00001</headingDrift>

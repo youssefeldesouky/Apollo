@@ -8,9 +8,9 @@ apollo_velocity_controller:
   back_left_wheel_joint: "rl_joint"
   front_right_wheel_joint: "fr_joint"
   back_right_wheel_joint: "rr_joint"
-  publish_rate: 50
-  pose_covariance_diagonal: [0.0001, 0.0001, 1000000.0, 1000000.0, 1000000.0, 0.001]
-  twist_covariance_diagonal: [0.0001, 0.0001, 0.001, 1000000.0, 1000000.0, 0.001]
+  publish_rate: 20
+  pose_covariance_diagonal: [0.000001, 0.000001, 1000000.0, 1000000.0, 1000000.0, 0.00001]
+  twist_covariance_diagonal: [0.000001, 0.000001, 0.00001, 1000000.0, 1000000.0, 0.00001]
   cmd_vel_timeout: 0.25
 
   # Override URDF look-up for wheel separation since the parent link is not the base_link.
@@ -32,18 +32,18 @@ apollo_velocity_controller:
       has_velocity_limits    : true
       max_velocity           : 0.8   # m/s
       has_acceleration_limits: true
-      max_acceleration       : 8   # m/s^2
+      max_acceleration       : 4.0  # m/s^2
     y:
       has_velocity_limits    : true
       max_velocity           : 0.5   # m/s
       has_acceleration_limits: true
-      max_acceleration       : 8   # m/s^2
+      max_acceleration       : 4.0  # m/s^2
   angular:
     z:
       has_velocity_limits    : true
       max_velocity           : 2.0   # rad/s
       has_acceleration_limits: true
-      max_acceleration       : 1.0   # rad/s^2
+      max_acceleration       : 20.0   # rad/s^2
 
 madgwick:
   use_mag: true
@@ -69,7 +69,7 @@ ekf_localization:
                  false, false, false,
                  true, true, false,
                  false, false, true,
-                 false, false, false]
+                 false, true, false]
   odom0_differential: true
   odom0_queue_size: 10
 
