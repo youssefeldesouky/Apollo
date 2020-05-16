@@ -6,6 +6,10 @@ global_costmap:
   transform_tolerance: 0.5
   rolling_window: false
   static_map: true
+  resolution: 0.015625
+  width: 10
+  height: 10
+
 
   footprint: [[0.2475, 0.150], [0.2475, -0.150], [-0.2475, -0.150], [-0.2475, 0.150]]
   footprint_padding: 0.05
@@ -20,4 +24,4 @@ global_costmap:
     first_map_only: true
 
   inflation_map:
-    inflation_radius: 0.4
+    inflation_radius: 0.5
