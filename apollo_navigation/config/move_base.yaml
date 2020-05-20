@@ -10,3 +10,7 @@ GlobalPlanner:
   use_dijkstra: true
   default_tolerance: 0.0
   publish_potential: true
+  lethal_cost: 253
+  cost_factor: 0.6
+  neutral_cost: 66
+  orientation_mode: 5
