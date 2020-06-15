@@ -16,7 +16,7 @@
   <!--<param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/>-->
 
   <remap from="odom" to="odometry/filtered" />
-  <!--<remap from="cmd_vel" to="apollo_velocity_controller/cmd_vel"/>-->
+  <remap from="cmd_vel" to="move_base/cmd_vel"/>
  </node>
  <node pkg="map_server" type="map_server" name="map_server" args="$(find apollo_navigation)/map/map.yaml"/>
  <!--<node pkg="tf2_ros" type="static_transform_publisher" name="map2odom" args="0 0 0 0 0 0 map odom"/>-->

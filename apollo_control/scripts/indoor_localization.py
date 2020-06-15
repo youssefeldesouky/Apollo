@@ -53,6 +53,7 @@ class Indoor:
 
     def cb(self, data):
         if not self._first_msg_received:
+            print(data.name)
             self._index_of_robot = list(data.name).index(self._robot_name)
             self._first_msg_received = True
         self._robot_location = data.pose[self._index_of_robot]

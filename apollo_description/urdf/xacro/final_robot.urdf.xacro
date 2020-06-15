@@ -28,6 +28,7 @@
   <xacro:wheel wheel="rl" x_dir="-0.14034" y_dir="0.1185"/>
   <xacro:wheel wheel="rr" x_dir="-0.14034" y_dir="-0.1185"/>
   <xacro:kinect/>
+  <xacro:fork_base/>
   <link name="imu_link"/>
   <joint name="imu_joint" type="fixed">
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 ${radians(0.0)}"/>

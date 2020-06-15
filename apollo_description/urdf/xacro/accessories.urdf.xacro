@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="kinect">
   <xacro:macro name="kinect" >
     <link name ="kinect_link">
@@ -112,5 +113,84 @@
         </plugin>
      </sensor>
    </gazebo>
+  </xacro:macro>
+  <xacro:macro name="fork_base">
+    <link name= "fork_b">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://apollo_description/meshfiles/lift_base_link.STL"/>
+        </geometry>
+      </visual>
+      <inertial>
+        <origin xyz="0 0 0.0" rpy="0 0 0" />
+        <mass value="0.556" />
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+      </inertial>
+      <collision>
+        <geometry>
+          <box size="0.040 0.25 0.002"/>
+        </geometry>
+        <origin xyz="0.015 0 0.395"/>
+      </collision>
+    </link>
+    <joint name="base_fork_joint" type="fixed">
+      <origin xyz="-0.0250 0.0 0.0" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="fork_b" />
+      <axis xyz="0 0 0" />
+    </joint>
+    <link name= "fork">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 -1.5708"/>
+        <geometry>
+          <mesh filename="package://apollo_description/meshfiles/fork_link.STL"/>
+        </geometry>
+        <material name="fork">
+       <color rgba="0.2 1.0 1.0 1.0"/>
+     </material>
+      </visual>
+      <inertial>
+        <origin xyz="0 0 0.0" rpy="0 0 0" />
+        <mass value="0.556" />
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+      </inertial>
+      <collision>
+        <geometry>
+          <mesh filename="package://apollo_description/meshfiles/fork_collider.stl"/>
+        </geometry>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 -1.5708"/>
+      </collision>
+    </link>
+    <joint name="fork_joint" type="prismatic">
+      <origin xyz="0.022 0.120 0.097" rpy="0 0 0" />
+      <parent link="fork_b" />
+      <child link="fork" />
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="0.05" lower="0.0" upper="0.275" />
+    </joint>
+    <transmission name="fork_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="fork_joint">
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="fork_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+        <hardwareInterface>EffortJointInterface</hardwareInterface>
+      </actuator>
+    </transmission>
+    <gazebo reference="fork">
+      <turnGravityOff>true</turnGravityOff>
+      <collision name="fork_collision">
+      <surface>
+        <friction>
+          <ode>
+            <mu>0.55</mu>
+            <mu2>0.45</mu2>
+          </ode>
+        </friction>
+      </surface>
+    </collision>
+    </gazebo>
   </xacro:macro>
 </robot>
