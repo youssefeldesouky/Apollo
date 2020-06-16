@@ -12,4 +12,5 @@
   <!--<node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="di2ls" args="_range_max:=4.0 _range_min:=0.8 image:=/kinect/depth/image_raw _output_frame_id:=kinect_link"/>-->
   <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pc2ls" args="_range_min:=0.8 _range_max:=4.0 _target_frame:=kinect_link _use_inf:=true cloud_in:=/kinect/depth/points _scan_time:=1.0/60.0 _max_height:=0.5 _angle_min:=${-30 * pi / 180.0} _angle_max:=${30 * pi / 180.0}"/>
   <node pkg="apollo_control" type="indoor_localization.py" name="rfid_tags"/>
+  <include file="$(find apollo_control)/launch/teleop.launch"/>
 </launch>

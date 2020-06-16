@@ -16,7 +16,7 @@ class Tag:
         self._msg.header.frame_id = "map"
         self._msg.pose.pose.orientation.w = 1.0
         self._msg.pose.covariance = np.identity(6)
-        self._msg.pose.covariance[0][0] = self._msg.pose.covariance[1][1] = self._variance * 10.0**-7
+        self._msg.pose.covariance[0][0] = self._msg.pose.covariance[1][1] = self._variance
         self._msg.pose.covariance = self._msg.pose.covariance.reshape(1, 36).tolist()[0]
 
     def check_if_activated(self, robot_location):
@@ -34,7 +34,7 @@ class Tag:
 
 
 class Indoor:
-    def __init__(self, robot_name="apollo", tags=(), radius=0.06, variance=0):
+    def __init__(self, robot_name="apollo", tags=(), radius=0.02, variance=0):
         rospy.init_node("indoor_localization")
         self._sub = rospy.Subscriber("gazebo/model_states", ModelStates, self.cb)
         self._publisher = rospy.Publisher("/rfid_pose", PoseWithCovarianceStamped, queue_size=1)
@@ -53,23 +53,28 @@ class Indoor:
 
     def cb(self, data):
         if not self._first_msg_received:
-            print(data.name)
-            self._index_of_robot = list(data.name).index(self._robot_name)
-            self._first_msg_received = True
+            try:
+                print(data.name)
+                self._index_of_robot = list(data.name).index(self._robot_name)
+                self._first_msg_received = True
+            except ValueError:
+                self._first_msg_received = False
         self._robot_location = data.pose[self._index_of_robot]
 
         for tag in self._tags:
             self._msg = tag.check_if_activated(self._robot_location.position)
             if self._msg:
                 break
-
-        if not self._publish_once and self._msg:
-            self._publisher.publish(self._msg)
-            self._publish_once = True
         else:
             self._publish_once = False
 
-    def create_tag(self, location, radius=0.2, variance=0):
+        if not self._publish_once and self._msg:
+            self._publisher.publish(self._msg)
+            #rospy.sleep(1)
+            #self._rate.sleep()
+            self._publish_once = True
+
+    def create_tag(self, location, radius=0.02, variance=0):
         return Tag(location, radius, variance)
 
     def pub_markers(self):
@@ -97,7 +102,8 @@ class Indoor:
 
 if __name__ == "__main__":
     try:
-        i = Indoor(tags=[(5, 0), (5, 5), (3, 1)])
+        tags = rospy.get_param("indoor_localization/tags")
+        i = Indoor(tags=tags)
         i.pub_markers()
         i.start_tracking()
 

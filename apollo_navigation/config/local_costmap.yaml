@@ -26,7 +26,7 @@ local_costmap:
       first_map_only: false
 
   inflation_map_static:
-      inflation_radius: 1.75
+      inflation_radius: 0.2 # was 1.75
       cost_scaling_factor: 2.58
 
 
@@ -40,5 +40,5 @@ local_costmap:
     clear_on_max_reading: true
 
   inflation_map:
-    inflation_radius: 1.75 # was 0.2
+    inflation_radius: 0.2 # was 1.75
     cost_scaling_factor: 2.58 # default was 10

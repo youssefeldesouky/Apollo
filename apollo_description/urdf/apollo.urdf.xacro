@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro" name="apollo">
-  <xacro:include filename="$(find apollo_description)/urdf/xacro/wheel.urdf.xacro"/>
-  <xacro:include filename="$(find apollo_description)/urdf/xacro/accessories.urdf.xacro"/>
+  <xacro:include filename="$(find apollo_description)/urdf/wheel.urdf.xacro"/>
+  <xacro:include filename="$(find apollo_description)/urdf/accessories.urdf.xacro"/>
   <link name="base_link">
     <inertial>
       <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
@@ -10,7 +10,7 @@
     </inertial>
       <visual>
           <geometry>
-            <mesh filename="package://apollo_description/meshfiles/base_link.STL"/>
+            <mesh filename="package://apollo_description/meshes/base_link.stl"/>
           </geometry>
           <origin xyz="0 0 0"/>
       </visual>

@@ -9,7 +9,7 @@
     </inertial>
       <visual>
           <geometry>
-              <mesh filename="package://apollo_description/meshfiles/wheel.stl"/>
+              <mesh filename="package://apollo_description/meshes/wheel.stl"/>
           </geometry>
           <origin xyz ="0 0 0" rpy ="0 0 1.5707963268"/>
           <material name="wheel_material">
