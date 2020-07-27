@@ -3,11 +3,6 @@
   <xacro:include filename="$(find apollo_description)/urdf/wheel.urdf.xacro"/>
   <xacro:include filename="$(find apollo_description)/urdf/accessories.urdf.xacro"/>
   <link name="base_link">
-    <inertial>
-      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-      <mass value="20.0"/>
-      <inertia ixx="0.16544" ixy="0" ixz="0.0" iyy="0.42368" iyz="0" izz="0.5582"/>
-    </inertial>
       <visual>
           <geometry>
             <mesh filename="package://apollo_description/meshes/base_link.stl"/>
@@ -21,6 +16,17 @@
         </geometry>
       </collision>
   </link>
+  <link name="inertial_link">
+    <inertial>
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <mass value="20.0"/>
+      <inertia ixx="0.16544" ixy="0" ixz="0.0" iyy="0.42368" iyz="0" izz="0.5582"/>
+    </inertial>
+  </link>
+  <joint name="inertial" type="fixed">
+    <parent link="base_link"/>
+    <child link="inertial_link"/>
+  </joint>
   <xacro:ultrasonic name="rear" xyz="${-0.49492/2} 0 0" rpy="0 0 ${radians(180)}"/>
   <xacro:ultrasonic name="front" xyz="${0.49492/2} 0 0" rpy="0 0 0"/>
   <xacro:wheel wheel="fl" x_dir="0.14034" y_dir="0.1185"/>

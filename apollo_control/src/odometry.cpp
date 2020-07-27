@@ -124,7 +124,6 @@ void Odometry::updateOpenLoop(double linearX, double linearY, double angular, co
 void Odometry::setWheelsParams(double wheels_k, double wheels_radius)
 {
   wheels_k_ = wheels_k;
-
   wheels_radius_ = wheels_radius;
 }
 
