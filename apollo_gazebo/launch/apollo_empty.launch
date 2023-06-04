@@ -1,7 +1,7 @@
 <launch>
-    <arg name="world_name" default="$(find apollo_gazebo)/worlds/maze_1"/>
+    <arg name="world_name" default="worlds/empty.world"/>
     <arg name="gui" default="true"/>
-    <include file="$(find apollo_gazebo)/launch/spawner.launch"/>
+    <include file="$(find apollo_gazebo)/launch/include/spawner.launch"/>
     <include file="$(find apollo_control)/launch/control.launch"/>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
@@ -11,6 +11,4 @@
       <arg name="headless" value="false"/>
       <arg name="debug" value="false"/>
     </include>
-    <include file="$(find apollo_control)/launch/teleop.launch"/>
-    <!--<node name="map_to_odom" pkg="tf2_ros" type="static_transform_publisher" args="0 0 0 0 0 0 map odom"/>-->
 </launch>

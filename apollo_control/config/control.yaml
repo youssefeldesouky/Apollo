@@ -1,3 +1,10 @@
+indoor_localization:
+  tags:
+    - [-1.622389, 0.227200]
+    - [-1.622389, -0.260466]
+    - [-1.622389, -0.769726]
+    - [-1.622389, -1.247951]
+
 apollo_joint_publisher:
   type: "joint_state_controller/JointStateController"
   publish_rate: 50
@@ -43,6 +50,11 @@ apollo_velocity_controller:
       max_velocity           : 2.0   # rad/s
       has_acceleration_limits: true
       max_acceleration       : 50.0   # rad/s^2
+
+fork_position_controller:
+  type: "effort_controllers/JointPositionController"
+  joint: "fork_joint"
+  pid: {p: 2000 , i: 1.0, d: 80.0, i_clamp_min: -100.0, i_clamp_max: 100.0, antiwindup: true}
 
 madgwick:
   use_mag: true
@@ -149,7 +161,7 @@ ekf_localization:
                 false, false, false,
                 false, false, false,
                 false, false, true,
-                true, true, false]
+                false, false, false]
   imu0_relative: false
   imu0_remove_gravitational_acceleration: true
   gravitational_acceleration: 9.79999999907
